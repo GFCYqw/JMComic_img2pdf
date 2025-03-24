@@ -1,14 +1,18 @@
-import jmcomic, os, time, yaml
+import jmcomic
+import os
+import time
+import yaml
 from PIL import Image
+
 
 def all2PDF(input_folder, pdfpath, pdfname):
     start_time = time.time()
-    paht = input_folder
+    path = input_folder
     zimulu = []  # 子目录（里面为image）
     image = []  # 子目录图集
     sources = []  # pdf格式的图
 
-    with os.scandir(paht) as entries:
+    with os.scandir(path) as entries:
         for entry in entries:
             if entry.is_dir():
                 zimulu.append(int(entry.name))
@@ -16,12 +20,12 @@ def all2PDF(input_folder, pdfpath, pdfname):
     zimulu.sort()
 
     for i in zimulu:
-        with os.scandir(paht + "/" + str(i)) as entries:
+        with os.scandir(path + "/" + str(i)) as entries:
             for entry in entries:
                 if entry.is_dir():
                     print("这一级不应该有自录")
                 if entry.is_file():
-                    image.append(paht + "/" + str(i) + "/" + entry.name)
+                    image.append(path + "/" + str(i) + "/" + entry.name)
 
     if "jpg" in image[0]:
         output = Image.open(image[0])
@@ -45,13 +49,15 @@ def all2PDF(input_folder, pdfpath, pdfname):
 
 if __name__ == "__main__":
     # 自定义设置：
-    config = "D:/18comic_down/code/config.yml"
+    config = "config.yml"
+    # config = "D:/18comic_down/code/config.yml"
     loadConfig = jmcomic.JmOption.from_file(config)
-    #如果需要下载，则取消以下注释
-    # manhua = ['146417']
-    # for id in manhua:
-    #     jmcomic.download_album(id,loadConfig)
+    # 如果需要下载，则取消以下注释
+    manhua = ["544683"]
+    for id in manhua:
+        jmcomic.download_album(id, loadConfig)
 
+    # 存储路径
     with open(config, "r", encoding="utf8") as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
         path = data["dir_rule"]["base_dir"]
@@ -59,7 +65,7 @@ if __name__ == "__main__":
     with os.scandir(path) as entries:
         for entry in entries:
             if entry.is_dir():
-                if os.path.exists(os.path.join(path +'/' +entry.name + ".pdf")):
+                if os.path.exists(os.path.join(path + "/" + entry.name + ".pdf")):
                     print("文件：《%s》 已存在，跳过" % entry.name)
                     continue
                 else:

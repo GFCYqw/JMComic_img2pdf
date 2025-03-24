@@ -2,13 +2,9 @@
 version: '2.0'
 
 dir_rule:
-  base_dir: D:/18comic_down/books
+  base_dir: ./books # 下载根目录
   rule: Bd_Atitle_Pindex
 
-client:
-  domain:
-    - 18comic.vip
-    - 18comic.org
 
 download:
   cache: true # 如果要下载的文件在磁盘上已存在，不用再下一遍了吧？
@@ -21,3 +17,15 @@ download:
     # 数值小，下得慢，配置要求低，对禁漫压力小
     # PS: 禁漫网页一般是一次请求50张图
     batch_count: 45
+
+  plugins:
+  after_init:
+    - plugin: usage_log # 实时打印硬件占用率的插件
+      kwargs:
+        interval: 0.5 # 间隔时间
+        enable_warning: true # 占用过大时发出预警
+
+    # - plugin: login # 登录插件
+    #   kwargs:
+    #     username: un # 用户名
+    #     password: pw # 密码

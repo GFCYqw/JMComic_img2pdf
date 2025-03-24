@@ -1,24 +1,35 @@
 ## 感谢以下项目
+
 [![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=hect0x7&repo=JMComic-Crawler-Python)]([https://github.com/tonquer/JMComic-qt](https://github.com/hect0x7/JMComic-Crawler-Python)https://github.com/hect0x7/JMComic-Crawler-Python)
+
 ## 功能说明
+
 将下载好的图片（本子）转换为PDF
+
 ## 使用说明
+
 1. 安装第三方库：
-  ```shell
-  pip install jmcomic -i https://pypi.org/project --upgrade
-  pip install pillow
-  pip install pyyaml 
-  ```
-2. 可直接运行main.py进行下载和转换，但需要预先配置config路径,
+
 ```shell
-manhua = ['146417']  
-for id in manhua:
-  jmcomic.download_album(id,loadConfig)
+pip install jmcomic -i https://pypi.org/project --upgrade
+pip install pillow
+pip install pyyaml
 ```
-可取消上述代码注释，manhua = ['146417']  中可填写多个需要下载的本子，格式:['12314545','2321415']以此类推；
+
+2. 可直接运行main.py进行下载和转换，但需要预先配置config路径,
+
+```shell
+manhua = ['544683']  
+for id in manhua:
+  jmcomic.download_album(id, loadConfig)
+```
+
+可取消上述代码注释，manhua = ['544683']  中可填写多个需要下载的本子，格式:['12314545','2321415']以此类推；
 
 ## 注意
+
 批量转换会预先将图片写入内存中，因此本子超过150话以上的，如果电脑内存小于32G，尽量不要尝试了
 
 ## 后续优化
+
 每话生成单独的pdf，最后合并，从而减轻内存消耗
